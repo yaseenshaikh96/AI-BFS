@@ -4,15 +4,26 @@
     {
         Graph<int> graph = new Graph<int>();
         Graph<int>.Node A = graph.CreateNode("A", 0);
-        Graph<int>.Node B = graph.CreateNode("B", 1, A);
-        Graph<int>.Node C = graph.CreateNode("C", 2, B);
-        Graph<int>.Node D = graph.CreateNode("D", 3, C);
-        Graph<int>.Node E = graph.CreateNode("E", 4, D);
+        Graph<int>.Node B = graph.CreateNode("B", 1);
+        Graph<int>.Node C = graph.CreateNode("C", 2);
+        Graph<int>.Node D = graph.CreateNode("D", 3);
+        Graph<int>.Node E = graph.CreateNode("E", 4);
+
+        graph.Connect(A, new Graph<int>.Connection(B, 2));
+        graph.Connect(B, new Graph<int>.Connection(C, 3));
+        graph.Connect(C, new Graph<int>.Connection(D, 4));
+        graph.Connect(D, new Graph<int>.Connection(E, 5));
 
         Graph<int>.Node[] nodes = BFS.Traverse(graph);
         foreach (var node in nodes)
-            System.Console.WriteLine(node.data);
-
-
+        {
+            System.Console.Write("Name: " + node.name + ", ");
+            System.Console.Write("Data: " + node.data + ", ");
+            foreach (Graph<int>.Connection connection in node.connections)
+            {
+                System.Console.Write("weight: " + connection.weight + ", For: " + connection.node.name + ", ");
+            }
+            System.Console.Write("\n");
+        }
     }
 }
